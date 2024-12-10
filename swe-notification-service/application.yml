@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: swenotificationgitops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ngdangkietswe/swe-infrastructure.git
+    targetRevision: HEAD
+    path: ./k8s/swe-notification-service
+  destination:
+    name: ''
+    server: 'https://kubernetes.default.svc'
+    namespace: swe-prod
+  sources: [ ]
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
